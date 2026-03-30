@@ -1,0 +1,45 @@
+.claude/
+
+# Build directories
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/bin/
+/obj/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+
+# Ninja generated files
+.ninja_deps
+.ninja_log
+build.ninja
+
+# Visual Studio generated files
+.vs/
+*.VC.db
+*.VC.opendb
+*.sln.docstates
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Compiled binaries and libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.o
+*.pdb
