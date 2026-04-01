@@ -87,18 +87,50 @@ void bucket_sort(std::vector<int>& data, int num_buckets) {
 }
 
 // ---------------------------------------------------------------------------
-// Radix Sort (LSD)
+// Radix Sort (LSD) - Least Significant Digit   
 // ---------------------------------------------------------------------------
 //
 // ? SEE DIAGRAM: cpp_diagrams.md #5 -- Step 0 + Pass 1 Detail
 // ? SEE DIAGRAM: cpp_diagrams.md #6 -- Passes 2-3 (Stability in Action)
 //
+static void counting_sort_by_digits(std::vector<int>& data, int exp) {
+	
+    int n = static_cast<int>(data.size());
+    
+    std::vector<int> output(n); // Output array to hold sorted numbers
+	int count[10] = { 0 }; // k = 10 for digits 0-9
+    // Count occurrences of each digit in the current position
+    for (int i = 0; i < n; i++) {
+        int digit = (data[i] / exp) % 10; // Get the digit at exp position
+        count[digit]++;
+    }
+
+	// Convert count to cumulative count to determine positions in output
+    for (int i = 1; i < 10; ++i) {
+        count[i] += count[i - 1];
+    }
+
+	// Build the output array by placing numbers in the correct position based on the current digit
+	for (int i = n - 1; i >= 0; i--) {
+        int digit = (data[i] / exp) % 10;
+        output[count[digit] - 1] = data[i]; // Place the number in the correct position
+        count[digit]--; // Decrement count for this digit
+    }
+
+	data = output; // Copy the output array back to data
+}
+
 void radix_sort(std::vector<int>& data) {
-    // TODO: Implement radix sort (LSD)
+    
+	if (data.size() <= 1) return; // Already sorted
+    
     //   1. Find the maximum value to determine the number of digits
-    //   2. For each digit position (ones, tens, hundreds, ...):
-    //      a. Use counting sort on that digit
-    //   3. After all digit passes, data is sorted
+ 
+	int max_val = *std::max_element(data.begin(), data.end());
+
+	for (int exp = 1; (max_val / exp) > 0; exp *= 10) {
+        counting_sort_by_digits(data, exp); // Sort data based on the current digit
+    }
 }
 
 // ---------------------------------------------------------------------------
